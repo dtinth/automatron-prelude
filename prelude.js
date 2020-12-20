@@ -41,7 +41,7 @@ self.ss = function ss(url, w = 1200, h = 630, options = {}) {
   `)
   const token = jwt.sign(
     { url, width: w, height: h, ...options },
-    key,
+    privateKey,
     { algorithm: 'RS256', noTimestamp: true, issuer: 'automatron' }
   )
   return `https://capture.the.spacet.me/${token}.png`
