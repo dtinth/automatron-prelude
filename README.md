@@ -1,2 +1,2 @@
 # automatron-prelude
-Prelude code for automatron bot
+[This code](prelude.js) gets run before [evaluating code](https://github.com/dtinth/automatron#livescript-evaluation) I send to [automatron](https://dt.in.th/automatron.html). This makes it easier for me to ask automatron to run errands for me.
