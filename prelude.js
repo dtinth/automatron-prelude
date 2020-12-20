@@ -1,7 +1,8 @@
-self.hello = function hello() {
-  return 42
-}
+// Send `;edit` to automatron to get a quick edit link.
+self.edit = 'https://github.com/dtinth/automatron-prelude/edit/main/prelude.js'
 
+// Send `;ss(url)` to automatron to get a screenshot of a webpage using personal-puppeteer.
+// See: https://github.com/dtinth/personal-puppeteer
 self.ss = function ss(url, w = 1200, h = 630, options = {}) {
   const jwt = require('jsonwebtoken')
   const privateKey = encrypted(`
