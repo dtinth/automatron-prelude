@@ -47,3 +47,12 @@ self.ss = function ss(url, w = 1200, h = 630, options = {}) {
   )
   return `https://capture.the.spacet.me/${token}.png`
 }
+
+self.share = (body) => {
+  const firebaseDynamicLinksApiKey = encrypted(
+    'pIt6kJSQH5oJNVyf0HIcxKSnsXRQzL2y.m7zZqStBA24bzCZ5Pxtui/5qI0RFasvjfOxJdeZaEyB1i+PZiS5fsHCB6yUaVk5am0PNdJVKyoPk'
+  )
+  const axios = require('axios')
+  const response = await axios.post('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=' + firebaseDynamicLinksApiKey, body)
+  return response.data
+}
