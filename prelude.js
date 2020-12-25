@@ -58,6 +58,7 @@ self.warp = async (url) => {
   const nacl = require('tweetnacl')
   const signature = nacl.sign.detached(Buffer.from(url, 'utf8'), secretKey)
   const s = Buffer.from(signature).toString('base64')
+    .replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
   return 'https://warp.spacet.me/api/go?u=' + encodeURIComponent(url) + '&i=automatron&s=' + s
 }
 
