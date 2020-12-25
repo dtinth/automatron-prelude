@@ -77,13 +77,13 @@ self.warp = (url) => {
 }
 
 self.share = async (url, title) => {
-  const url = share({
+  const body = {
     dynamicLinkInfo: {
       link: warp(url),
       domainUriPrefix: 'https://dtinth.page.link',
       socialMetaTagInfo: { socialImageLink: await snap(ss(url)), socialTitle: title },
     }
-  })
+  }
   const firebaseDynamicLinksApiKey = encrypted(
     'pIt6kJSQH5oJNVyf0HIcxKSnsXRQzL2y.m7zZqStBA24bzCZ5Pxtui/5qI0RFasvjfOxJdeZaEyB1i+PZiS5fsHCB6yUaVk5am0PNdJVKyoPk'
   )
