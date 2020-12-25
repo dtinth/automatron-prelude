@@ -48,6 +48,18 @@ self.ss = function ss(url, w = 1200, h = 630, options = {}) {
   return `https://capture.the.spacet.me/${token}.png`
 }
 
+self.snap = async (ssurl) => {
+  const captureEndpointUrl = encrypted('FHaFskMNp1b0kTbpHMbceQ9L4jHpbjpU.epIxrxHS/00HhVpKvknQXcEiIGpv7BD2BCXmqmQuzXHsPIKjUJF4bKFAMtp0asm2UZB3t0qdj7WWzQAeR70ey4KsqseyzaW/YcXBReuPG2EByvxdBvXAY2kR2K3I6edyYBGXndYC7oIftNC1Jql/dBFD9AGA890qB2xik9Hq')
+  const destKey = new Date().toJSON().split('T')[0].split('-').concat([
+    require('crypto').createHash('md5').update(ssurl).digest('hex') + '.png'
+  ]).join('/')
+  const response = await axios.post(captureEndpointUrl, {
+    src: ssurl,
+    dest: destKey,
+  })
+  return encrypted('RYhQeG4vy2P3Kird8Ew3anYiQjcd60+g.gOGfit8hk1aYpJ3NmguqAD+IZOdexNAaqBGvE25rxKY5IfL0qUcZEwO/J7K/2TqI') + destKey
+}
+
 self.warp = async (url) => {
   const secretKey = Buffer.from(
     encrypted(
