@@ -1,10 +1,13 @@
+const axios = require('axios')
+const nacl = require('tweetnacl')
+const jwt = require('jsonwebtoken')
+
 // Send `;edit` to automatron to get a quick edit link.
 self.edit = 'https://github.com/dtinth/automatron-prelude/edit/main/prelude.js'
 
 // Send `;ss(url)` to automatron to get a screenshot of a webpage using personal-puppeteer.
 // See: https://github.com/dtinth/personal-puppeteer
 self.ss = function ss(url, w = 1200, h = 630, options = {}) {
-  const jwt = require('jsonwebtoken')
   const privateKey = encrypted(`
     tcD/qPP6Y+wioF0dHThXyrvCqoq3NSG3.+4EG2NPNzl8410ZTyBGXwmcq4LLk10xYkMg5aR/
     0y09wriNW903nlBPqGEmi7QyEHZxRXYtIJZhkqKLUpTBVmdrl/oHPKev7SYSDKeMBnqofM03
@@ -67,7 +70,6 @@ self.warp = async (url) => {
     ),
     'base64'
   )
-  const nacl = require('tweetnacl')
   const signature = nacl.sign.detached(Buffer.from(url, 'utf8'), secretKey)
   const s = Buffer.from(signature).toString('base64')
     .replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
@@ -78,7 +80,6 @@ self.share = async (body) => {
   const firebaseDynamicLinksApiKey = encrypted(
     'pIt6kJSQH5oJNVyf0HIcxKSnsXRQzL2y.m7zZqStBA24bzCZ5Pxtui/5qI0RFasvjfOxJdeZaEyB1i+PZiS5fsHCB6yUaVk5am0PNdJVKyoPk'
   )
-  const axios = require('axios')
   const response = await axios.post('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=' + firebaseDynamicLinksApiKey, body)
   return response.data
 }
