@@ -63,7 +63,7 @@ self.snap = async (ssurl) => {
   return encrypted('RYhQeG4vy2P3Kird8Ew3anYiQjcd60+g.gOGfit8hk1aYpJ3NmguqAD+IZOdexNAaqBGvE25rxKY5IfL0qUcZEwO/J7K/2TqI') + destKey
 }
 
-self.warp = async (url) => {
+self.warp = (url) => {
   const secretKey = Buffer.from(
     encrypted(
       'jb3l+ZgI8LUPmsOInTsO/eDYja7b+9u0.cIpCU0W39EmZe3IehSGBIbl32jGNmd/o8PDlxzTlUHPxVKEddzeqG4uq1QpJfSaX+HocEkq5lGePQikr3kLj7azFVchCDiq1t5jJTCLKRQJaKN3Gej7wiTd3Aw6+O7NzaWYfzli8LGdF0Q=='
@@ -76,7 +76,14 @@ self.warp = async (url) => {
   return 'https://warp.spacet.me/api/go?u=' + encodeURIComponent(url) + '&i=automatron&s=' + s
 }
 
-self.share = async (body) => {
+self.share = async (url, title) => {
+  const url = share({
+    dynamicLinkInfo: {
+      link: warp(url),
+      domainUriPrefix: 'https://dtinth.page.link',
+      socialMetaTagInfo: { socialImageLink: await snap(ss(url)), socialTitle: title },
+    }
+  })
   const firebaseDynamicLinksApiKey = encrypted(
     'pIt6kJSQH5oJNVyf0HIcxKSnsXRQzL2y.m7zZqStBA24bzCZ5Pxtui/5qI0RFasvjfOxJdeZaEyB1i+PZiS5fsHCB6yUaVk5am0PNdJVKyoPk'
   )
