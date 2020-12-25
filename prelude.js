@@ -48,6 +48,18 @@ self.ss = function ss(url, w = 1200, h = 630, options = {}) {
   return `https://capture.the.spacet.me/${token}.png`
 }
 
+self.warp = async (url) => {
+  const secretKey = Buffer.from(
+    encrypted(
+      'jb3l+ZgI8LUPmsOInTsO/eDYja7b+9u0.cIpCU0W39EmZe3IehSGBIbl32jGNmd/o8PDlxzTlUHPxVKEddzeqG4uq1QpJfSaX+HocEkq5lGePQikr3kLj7azFVchCDiq1t5jJTCLKRQJaKN3Gej7wiTd3Aw6+O7NzaWYfzli8LGdF0Q=='
+    ),
+    'base64'
+  )
+  const nacl = require('tweetnacl')
+  const signature = nacl.sign.detached(Buffer.from(url, 'utf8'), secretKey)
+  return Buffer.from(signature).toString('base64')
+}
+
 self.share = async (body) => {
   const firebaseDynamicLinksApiKey = encrypted(
     'pIt6kJSQH5oJNVyf0HIcxKSnsXRQzL2y.m7zZqStBA24bzCZ5Pxtui/5qI0RFasvjfOxJdeZaEyB1i+PZiS5fsHCB6yUaVk5am0PNdJVKyoPk'
