@@ -8,6 +8,16 @@ self.edit = 'https://github.com/dtinth/automatron-prelude/edit/main/prelude.js'
 // Send `;ss(url)` to automatron to get a screenshot of a webpage using personal-puppeteer.
 // See: https://github.com/dtinth/personal-puppeteer
 self.ss = function ss(url, w = 1200, h = 630, options = {}) {
+  {
+    const m = url.match(/^https:\/\/twitter\.com\/\w+\/(\d+)/)
+    if (m) {
+      url = 'https://platform.twitter.com/embed/index.html?id=' + m[1]
+      w = 550
+      h = 289
+      options.deviceScaleFactor = 3
+    }
+  }
+
   const privateKey = encrypted(`
     tcD/qPP6Y+wioF0dHThXyrvCqoq3NSG3.+4EG2NPNzl8410ZTyBGXwmcq4LLk10xYkMg5aR/
     0y09wriNW903nlBPqGEmi7QyEHZxRXYtIJZhkqKLUpTBVmdrl/oHPKev7SYSDKeMBnqofM03
