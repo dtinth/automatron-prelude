@@ -44,7 +44,7 @@ self.ss = function ss(url, w = 1200, h = 630, options = {}) {
     CcYA65ncEMMFs2hb1yIRLF/3JZgU=
   `)
   const token = jwt.sign(
-    { url, width: w, height: h, ...options },
+    { url, width: w, height: h, waitUntil: 'networkidle0', ...options },
     privateKey,
     { algorithm: 'RS256', noTimestamp: true, issuer: 'automatron' }
   )
