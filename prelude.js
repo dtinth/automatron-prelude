@@ -9,7 +9,7 @@ self.edit = 'https://github.com/dtinth/automatron-prelude/edit/main/prelude.js'
 // See: https://github.com/dtinth/personal-puppeteer
 self.ss = function ss(url, w = 1200, h = 630, options = {}) {
   {
-    const m = url.match(/^https:\/\/twitter\.com\/\w+\/(\d+)/)
+    const m = url.match(/^https:\/\/twitter\.com\/\w+\/status\/(\d+)/)
     if (m) {
       url = 'https://platform.twitter.com/embed/index.html?id=' + m[1]
       w = 550
