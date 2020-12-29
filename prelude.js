@@ -86,12 +86,12 @@ self.warp = (url) => {
   return 'https://warp.spacet.me/api/go?u=' + encodeURIComponent(url) + '&i=automatron&s=' + s
 }
 
-self.share = async (url, title) => {
+self.share = async (url, title, image, description) => {
   const body = {
     dynamicLinkInfo: {
       link: warp(url),
       domainUriPrefix: 'https://dtinth.page.link',
-      socialMetaTagInfo: { socialImageLink: await snap(ss(url)), socialTitle: title },
+      socialMetaTagInfo: { socialImageLink: image || (await snap(ss(url))), socialTitle: title, socialDescription: description },
     }
   }
   const firebaseDynamicLinksApiKey = encrypted(
