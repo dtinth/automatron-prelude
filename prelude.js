@@ -83,7 +83,8 @@ self.warp = (url) => {
   const signature = nacl.sign.detached(Buffer.from(url, 'utf8'), secretKey)
   const s = Buffer.from(signature).toString('base64')
     .replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
-  return 'https://warp.spacet.me/api/go?u=' + encodeURIComponent(url) + '&i=automatron&s=' + s
+  const prefix = url.endsWith('*') ? '&p=' + (url.length - 1) : ''
+  return 'https://warp.spacet.me/api/go?u=' + encodeURIComponent(url) + prefix + '&i=automatron&s=' + s
 }
 
 self.share = async (url, title, image, description) => {
