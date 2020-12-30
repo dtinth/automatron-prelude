@@ -87,7 +87,7 @@ self.warp = (url) => {
   return 'https://warp.spacet.me/api/go?u=' + encodeURIComponent(url) + prefix + '&i=automatron&s=' + s
 }
 
-self.share = async (url, title, image, description) => {
+self.share = async (url, title, description, image) => {
   const body = {
     dynamicLinkInfo: {
       link: warp(url),
