@@ -101,3 +101,11 @@ self.share = async (url, title, description, image) => {
   const response = await axios.post('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=' + firebaseDynamicLinksApiKey, body)
   return response.data.shortLink
 }
+
+// Send `;prescription!` to automatron to get the prescription reminder
+self.prescription = () => {
+  const f = (count, start, interval) => count - Math.floor((Date.now() - Date.parse(start)) / (interval * 3600e3))
+  return {
+    [encrypted('qMcVQ7J+dziMT995XVPbkQSnhWJhGRfs.RjPkSgu14bgQWQICKJUVCblnvv3d5dbqRA==')]: f(5, '2020-01-04T03:00+07:00', 12)
+  }
+}
