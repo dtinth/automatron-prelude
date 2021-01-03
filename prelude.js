@@ -91,7 +91,7 @@ self.share = async (url, title, description, image) => {
   const body = {
     dynamicLinkInfo: {
       link: warp(url),
-      domainUriPrefix: 'https://dtinth.page.link',
+      domainUriPrefix: 'https://warp.page.link',
       socialMetaTagInfo: { socialImageLink: image || (await snap(ss(url))), socialTitle: title, socialDescription: description },
     }
   }
