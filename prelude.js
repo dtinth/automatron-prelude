@@ -106,6 +106,6 @@ self.share = async (url, title, description, image) => {
 self.prescription = () => {
   const f = (count, start, interval) => count - Math.floor((Date.now() - Date.parse(start)) / (interval * 3600e3))
   return {
-    [encrypted('qMcVQ7J+dziMT995XVPbkQSnhWJhGRfs.RjPkSgu14bgQWQICKJUVCblnvv3d5dbqRA==')]: f(5, '2020-01-04T03:00+07:00', 12)
+    [encrypted('qMcVQ7J+dziMT995XVPbkQSnhWJhGRfs.RjPkSgu14bgQWQICKJUVCblnvv3d5dbqRA==')]: f(5, '2021-01-04T03:00+07:00', 12)
   }
 }
