@@ -109,3 +109,11 @@ self.prescription = () => {
     [encrypted('qMcVQ7J+dziMT995XVPbkQSnhWJhGRfs.RjPkSgu14bgQWQICKJUVCblnvv3d5dbqRA==')]: f(5, '2021-01-04T09:00+07:00', 12)
   }
 }
+
+// Get webring image
+self.webring = url => {
+  return {
+    desktopImageUrl: ss(url, 1280, 960),
+    mobileImageUrl: ss(url, 360, 640, { deviceScaleFactor: 2 }),
+  }
+}
