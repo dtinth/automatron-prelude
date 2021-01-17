@@ -112,8 +112,8 @@ self.prescription = () => {
 
 // Get webring image
 self.webring = url => {
-  return {
+  return JSON.stringify({
     desktopImageUrl: ss(url, 1280, 960),
     mobileImageUrl: ss(url, 360, 640, { deviceScaleFactor: 2 }),
-  }
+  }, null, 2)
 }
