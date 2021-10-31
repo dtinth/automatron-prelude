@@ -1,20 +1,20 @@
-const axios = require('axios')
-const nacl = require('tweetnacl')
-const jwt = require('jsonwebtoken')
+const axios = require("axios");
+const nacl = require("tweetnacl");
+const jwt = require("jsonwebtoken");
 
 // Send `;edit` to automatron to get a quick edit link.
-self.edit = 'https://github.com/dtinth/automatron-prelude/edit/main/prelude.js'
+self.edit = "https://github.com/dtinth/automatron-prelude/edit/main/prelude.js";
 
 // Send `;ss(url)` to automatron to get a screenshot of a webpage using personal-puppeteer.
 // See: https://github.com/dtinth/personal-puppeteer
 self.ss = function ss(url, w = 1200, h = 630, options = {}) {
   {
-    const m = url.match(/^https:\/\/twitter\.com\/\w+\/status\/(\d+)/)
+    const m = url.match(/^https:\/\/twitter\.com\/\w+\/status\/(\d+)/);
     if (m) {
-      url = 'https://platform.twitter.com/embed/index.html?id=' + m[1]
-      w = 550
-      h = 289
-      options.deviceScaleFactor = 3
+      url = "https://platform.twitter.com/embed/index.html?id=" + m[1];
+      w = 550;
+      h = 289;
+      options.deviceScaleFactor = 3;
     }
   }
 
@@ -52,68 +52,103 @@ self.ss = function ss(url, w = 1200, h = 630, options = {}) {
     FPIspY5Hw/DoJJsWjZqCo8MOtR3APG5ZsihxKtv4DC9yD8MckTBXF1U6S3eD4W4DPIrbOlTI
     Un52EZoTxAOBUJxcHeF/LTKdJlYfHYLQyOjxeULYSmnxa/byC9RQqxjSLGildwFKeXq30Ewu
     CcYA65ncEMMFs2hb1yIRLF/3JZgU=
-  `)
+  `);
   const token = jwt.sign(
-    { url, width: w, height: h, waitUntil: 'networkidle0', ...options },
+    { url, width: w, height: h, waitUntil: "networkidle0", ...options },
     privateKey,
-    { algorithm: 'RS256', noTimestamp: true, issuer: 'automatron' }
-  )
-  return `https://capture.the.spacet.me/${token}.png`
-}
+    { algorithm: "RS256", noTimestamp: true, issuer: "automatron" }
+  );
+  return `https://capture.the.spacet.me/${token}.png`;
+};
 
 self.snap = async (ssurl) => {
-  const captureEndpointUrl = encrypted('FHaFskMNp1b0kTbpHMbceQ9L4jHpbjpU.epIxrxHS/00HhVpKvknQXcEiIGpv7BD2BCXmqmQuzXHsPIKjUJF4bKFAMtp0asm2UZB3t0qdj7WWzQAeR70ey4KsqseyzaW/YcXBReuPG2EByvxdBvXAY2kR2K3I6edyYBGXndYC7oIftNC1Jql/dBFD9AGA890qB2xik9Hq')
-  const destKey = new Date().toJSON().split('T')[0].split('-').concat([
-    require('crypto').createHash('md5').update(ssurl).digest('hex') + '.png'
-  ]).join('/')
+  const captureEndpointUrl = encrypted(
+    "FHaFskMNp1b0kTbpHMbceQ9L4jHpbjpU.epIxrxHS/00HhVpKvknQXcEiIGpv7BD2BCXmqmQuzXHsPIKjUJF4bKFAMtp0asm2UZB3t0qdj7WWzQAeR70ey4KsqseyzaW/YcXBReuPG2EByvxdBvXAY2kR2K3I6edyYBGXndYC7oIftNC1Jql/dBFD9AGA890qB2xik9Hq"
+  );
+  const destKey = new Date()
+    .toJSON()
+    .split("T")[0]
+    .split("-")
+    .concat([
+      require("crypto").createHash("md5").update(ssurl).digest("hex") + ".png",
+    ])
+    .join("/");
   const response = await axios.post(captureEndpointUrl, {
     src: ssurl,
     dest: destKey,
-  })
-  return encrypted('RYhQeG4vy2P3Kird8Ew3anYiQjcd60+g.gOGfit8hk1aYpJ3NmguqAD+IZOdexNAaqBGvE25rxKY5IfL0qUcZEwO/J7K/2TqI') + destKey
-}
+  });
+  return (
+    encrypted(
+      "RYhQeG4vy2P3Kird8Ew3anYiQjcd60+g.gOGfit8hk1aYpJ3NmguqAD+IZOdexNAaqBGvE25rxKY5IfL0qUcZEwO/J7K/2TqI"
+    ) + destKey
+  );
+};
 
 self.warp = (url) => {
   const secretKey = Buffer.from(
     encrypted(
-      'jb3l+ZgI8LUPmsOInTsO/eDYja7b+9u0.cIpCU0W39EmZe3IehSGBIbl32jGNmd/o8PDlxzTlUHPxVKEddzeqG4uq1QpJfSaX+HocEkq5lGePQikr3kLj7azFVchCDiq1t5jJTCLKRQJaKN3Gej7wiTd3Aw6+O7NzaWYfzli8LGdF0Q=='
+      "jb3l+ZgI8LUPmsOInTsO/eDYja7b+9u0.cIpCU0W39EmZe3IehSGBIbl32jGNmd/o8PDlxzTlUHPxVKEddzeqG4uq1QpJfSaX+HocEkq5lGePQikr3kLj7azFVchCDiq1t5jJTCLKRQJaKN3Gej7wiTd3Aw6+O7NzaWYfzli8LGdF0Q=="
     ),
-    'base64'
-  )
-  const signature = nacl.sign.detached(Buffer.from(url, 'utf8'), secretKey)
-  const s = Buffer.from(signature).toString('base64')
-    .replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_')
-  const prefix = url.endsWith('*') ? '&p=' + (url.length - 1) : ''
-  return 'https://warp.spacet.me/api/go?u=' + encodeURIComponent(url) + prefix + '&i=automatron&s=' + s
-}
+    "base64"
+  );
+  const signature = nacl.sign.detached(Buffer.from(url, "utf8"), secretKey);
+  const s = Buffer.from(signature)
+    .toString("base64")
+    .replace(/=/g, "")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_");
+  const prefix = url.endsWith("*") ? "&p=" + (url.length - 1) : "";
+  return (
+    "https://warp.spacet.me/api/go?u=" +
+    encodeURIComponent(url) +
+    prefix +
+    "&i=automatron&s=" +
+    s
+  );
+};
 
 self.share = async (url, title, description, image) => {
   const body = {
     dynamicLinkInfo: {
       link: warp(url),
-      domainUriPrefix: 'https://warp.page.link',
-      socialMetaTagInfo: { socialImageLink: image || (await snap(ss(url))), socialTitle: title, socialDescription: description },
-    }
-  }
+      domainUriPrefix: "https://warp.page.link",
+      socialMetaTagInfo: {
+        socialImageLink: image || (await snap(ss(url))),
+        socialTitle: title,
+        socialDescription: description,
+      },
+    },
+  };
   const firebaseDynamicLinksApiKey = encrypted(
-    'pIt6kJSQH5oJNVyf0HIcxKSnsXRQzL2y.m7zZqStBA24bzCZ5Pxtui/5qI0RFasvjfOxJdeZaEyB1i+PZiS5fsHCB6yUaVk5am0PNdJVKyoPk'
-  )
-  const response = await axios.post('https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=' + firebaseDynamicLinksApiKey, body)
-  return response.data.shortLink
-}
+    "pIt6kJSQH5oJNVyf0HIcxKSnsXRQzL2y.m7zZqStBA24bzCZ5Pxtui/5qI0RFasvjfOxJdeZaEyB1i+PZiS5fsHCB6yUaVk5am0PNdJVKyoPk"
+  );
+  const response = await axios.post(
+    "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=" +
+      firebaseDynamicLinksApiKey,
+    body
+  );
+  return response.data.shortLink;
+};
 
 // Send `;prescription!` to automatron to get the prescription reminder
 self.prescription = () => {
-  const f = (count, start, interval) => count - Math.floor((Date.now() - Date.parse(start)) / (interval * 3600e3))
+  const f = (count, start, interval) =>
+    count - Math.floor((Date.now() - Date.parse(start)) / (interval * 3600e3));
   return {
-    [encrypted('qMcVQ7J+dziMT995XVPbkQSnhWJhGRfs.RjPkSgu14bgQWQICKJUVCblnvv3d5dbqRA==')]: f(5, '2021-01-04T09:00+07:00', 12)
-  }
-}
+    [encrypted(
+      "qMcVQ7J+dziMT995XVPbkQSnhWJhGRfs.RjPkSgu14bgQWQICKJUVCblnvv3d5dbqRA=="
+    )]: f(5, "2021-01-04T09:00+07:00", 12),
+  };
+};
 
 // Get webring image
-self.webring = url => {
-  return JSON.stringify({
-    desktopImageUrl: ss(url, 1280, 960),
-    mobileImageUrl: ss(url, 360, 640, { deviceScaleFactor: 2 }),
-  }, null, 2)
-}
+self.webring = (url) => {
+  return JSON.stringify(
+    {
+      desktopImageUrl: ss(url, 1280, 960),
+      mobileImageUrl: ss(url, 360, 640, { deviceScaleFactor: 2 }),
+    },
+    null,
+    2
+  );
+};
