@@ -129,26 +129,3 @@ self.share = async (url, title, description, image) => {
   );
   return response.data.shortLink;
 };
-
-// Send `;prescription!` to automatron to get the prescription reminder
-self.prescription = () => {
-  const f = (count, start, interval) =>
-    count - Math.floor((Date.now() - Date.parse(start)) / (interval * 3600e3));
-  return {
-    [encrypted(
-      "qMcVQ7J+dziMT995XVPbkQSnhWJhGRfs.RjPkSgu14bgQWQICKJUVCblnvv3d5dbqRA=="
-    )]: f(5, "2021-01-04T09:00+07:00", 12),
-  };
-};
-
-// Get webring image
-self.webring = (url) => {
-  return JSON.stringify(
-    {
-      desktopImageUrl: ss(url, 1280, 960),
-      mobileImageUrl: ss(url, 360, 640, { deviceScaleFactor: 2 }),
-    },
-    null,
-    2
-  );
-};
