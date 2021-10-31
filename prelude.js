@@ -129,3 +129,12 @@ self.share = async (url, title, description, image) => {
   );
   return response.data.shortLink;
 };
+
+self.gh = axios.create({
+  baseURL: "https://api.github.com/",
+  headers: {
+    Authorization: `Bearer ${encrypted(
+      "PasP+sz1aC0Yxomd/qcjMFhhuttuCUqV.ITv0nwMS6w6ur6uJ4S+yxarPG0GYay7vPaukP4IIFWw+rlC9SfG7jlLRh0l8Pucv72aBh/ghQLDYdg=="
+    )}`,
+  },
+});
