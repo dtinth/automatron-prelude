@@ -138,3 +138,8 @@ self.gh = axios.create({
     )}`,
   },
 });
+
+self.gh.comment = (repo, issue, text) =>
+  self.gh
+    .post(`/repos/${repo}/issues/${issue}/comments`, { body: text })
+    .then((r) => r.data.html_url);
