@@ -154,9 +154,11 @@ self.workSlack = axios.create({
 });
 
 self.workSlack.goToSleep = () =>
-  self.workSlack.post("users.profile.set", {
-    profile: {
-      status_text: "zzz",
-      status_emoji: ":zzz:",
-    },
-  });
+  self.workSlack
+    .post("users.profile.set", {
+      profile: {
+        status_text: "zzz",
+        status_emoji: ":zzz:",
+      },
+    })
+    .then((r) => "OK!");
