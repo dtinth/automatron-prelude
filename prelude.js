@@ -3,7 +3,7 @@ const nacl = require("tweetnacl");
 const jwt = require("jsonwebtoken");
 
 // Send `;edit` to automatron to get a quick edit link.
-self.edit = "https://github.com/dtinth/automatron-prelude/edit/main/prelude.js";
+self.edit = "https://github.dev/dtinth/automatron-prelude/blob/main/prelude.js";
 
 // Send `;ss(url)` to automatron to get a screenshot of a webpage using personal-puppeteer.
 // See: https://github.com/dtinth/personal-puppeteer
