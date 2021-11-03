@@ -143,3 +143,20 @@ self.gh.comment = (repo, issue, text) =>
   self.gh
     .post(`/repos/${repo}/issues/${issue}/comments`, { body: text })
     .then((r) => r.data.html_url);
+
+self.workSlack = axios.create({
+  baseURL: "https://slack.com/api/",
+  headers: {
+    Authorization: `Bearer ${encrypted(
+      "PzuKuXBxqS0HgOR3GzAqxkVPUgSv4ki7.UiksCwrL4MqinqfuWYU+p77eR10Sejtqmv2pgVldlNOMheuKkz9C8KpKWLusd/KBi24YMKqKgKv6kiXzhtG7hQY1BfRB6K6U2wxxnzTVMShnXzY5XLzZaxY5D/3mjT8S"
+    )}`,
+  },
+});
+
+self.workSlack.goToSleep = () =>
+  self.workSlack.post("users.profile.set", {
+    profile: {
+      status_text: "zzz",
+      status_emoji: ":zzz:",
+    },
+  });
