@@ -172,3 +172,5 @@ self.workSlack.wakeUp = () =>
       },
     })
     .then((r) => "OK!");
+
+self.isItWorking = "yes";
