@@ -153,26 +153,29 @@ self.workSlack = axios.create({
   },
 });
 
-self.workSlack.goToSleep = () =>
-  self.workSlack
-    .post("users.profile.set", {
-      profile: {
-        status_text: "sleeping",
-        status_emoji: ":zzz:",
-      },
-    })
-    .then((r) => "OK!");
-
-self.workSlack.wakeUp = () =>
-  self.workSlack
-    .post("users.profile.set", {
-      profile: {
-        status_text: "",
-        status_emoji: "",
-      },
-    })
-    .then((r) => "OK!");
-
 self.registerHandler("bedtime", async () => {
-  await self.workSlack.goToSleep();
+  await self.workSlack.post("users.profile.set", {
+    profile: {
+      status_text: "sleeping",
+      status_emoji: ":zzz:",
+    },
+  });
+});
+
+self.registerHandler("ooo", async () => {
+  await self.workSlack.post("users.profile.set", {
+    profile: {
+      status_text: "out-of-office",
+      status_emoji: ":ooo:",
+    },
+  });
+});
+
+self.registerHandler("work", async () => {
+  await self.workSlack.post("users.profile.set", {
+    profile: {
+      status_text: "",
+      status_emoji: "",
+    },
+  });
 });
