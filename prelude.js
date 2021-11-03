@@ -172,3 +172,7 @@ self.workSlack.wakeUp = () =>
       },
     })
     .then((r) => "OK!");
+
+self.registerHandler("bedtime", async () => {
+  await self.workSlack.goToSleep();
+});
