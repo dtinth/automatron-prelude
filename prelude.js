@@ -157,8 +157,18 @@ self.workSlack.goToSleep = () =>
   self.workSlack
     .post("users.profile.set", {
       profile: {
-        status_text: "zzz",
+        status_text: "sleeping",
         status_emoji: ":zzz:",
+      },
+    })
+    .then((r) => "OK!");
+
+self.workSlack.wakeUp = () =>
+  self.workSlack
+    .post("users.profile.set", {
+      profile: {
+        status_text: "",
+        status_emoji: "",
       },
     })
     .then((r) => "OK!");
