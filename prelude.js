@@ -154,12 +154,21 @@ self.workSlack = axios.create({
 });
 
 self.registerHandler("bedtime", async () => {
-  await self.workSlack.post("users.profile.set", {
-    profile: {
-      status_text: "sleeping",
-      status_emoji: ":zzz:",
-    },
-  });
+  if (new Date().toJSON().split("T")[1] < "15") {
+    await self.workSlack.post("users.profile.set", {
+      profile: {
+        status_text: "taking nap",
+        status_emoji: ":bed:",
+      },
+    });
+  } else {
+    await self.workSlack.post("users.profile.set", {
+      profile: {
+        status_text: "sleeping",
+        status_emoji: ":zzz:",
+      },
+    });
+  }
 });
 
 self.registerHandler("ooo", async () => {
