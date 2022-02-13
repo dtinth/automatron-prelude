@@ -5,6 +5,14 @@ const jwt = require("jsonwebtoken");
 // Send `;edit` to automatron to get a quick edit link.
 self.edit = "https://github.dev/dtinth/automatron-prelude/blob/main/prelude.js";
 
+// Use the `time()` function to measure the time for a Promise to resolve.
+self.time = async (promise) => {
+  const start = Date.now();
+  const [result] = await Promise.allSettled([promise]);
+  const finish = Date.now();
+  return { ...result, elapsed: finish - start };
+};
+
 // Send `;ss(url)` to automatron to get a screenshot of a webpage using personal-puppeteer.
 // See: https://github.com/dtinth/personal-puppeteer
 self.ss = function ss(url, w = 1200, h = 630, options = {}) {
