@@ -161,11 +161,11 @@ self.workSlack = axios.create({
   },
 });
 
-function formatDate(t) {
+self.formatDate = (t) => {
   const d = new Date(Date.parse(t) + 7 * 3600e3);
   const i = d.toISOString();
   return i.slice(0, 10) + " " + i.slice(11, 16);
-}
+};
 
 // Send `;txs!` to get the latest transactions
 self.txs = () =>
