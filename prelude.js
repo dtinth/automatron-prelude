@@ -161,6 +161,12 @@ self.workSlack = axios.create({
   },
 });
 
+function formatDate(t) {
+  const d = new Date(Date.parse(t) + 7 * 3600e3);
+  const i = d.toISOString();
+  return i.slice(0, 10) + " " + i.slice(11, 16);
+}
+
 // Send `;txs!` to get the latest transactions
 self.txs = () =>
   self
@@ -169,9 +175,10 @@ self.txs = () =>
     )
     .then((a) =>
       a
-        .map(
-          (e) => `${e.time}\n${e.type} ${e.amount} ${e.currency} ${e.merchant}`
-        )
+        .map((e) => {
+          const date = formatDate(e.time);
+          return `${date}\n${e.type} ${e.amount} ${e.currency} ${e.merchant}`;
+        })
         .reverse()
         .join("\n")
     );
