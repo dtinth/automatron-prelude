@@ -161,6 +161,21 @@ self.workSlack = axios.create({
   },
 });
 
+// Send `;txs!` to get the latest transactions
+self.txs = () =>
+  self
+    .withDb((db) =>
+      db.collection("txs").find().sort({ _id: -1 }).limit(15).toArray()
+    )
+    .then((a) =>
+      a
+        .map(
+          (e) => `${e.time}\n${e.type} ${e.amount} ${e.currency} ${e.merchant}`
+        )
+        .reverse()
+        .join("\n")
+    );
+
 self.registerHandler("bedtime", async () => {
   if (new Date().toJSON().split("T")[1] < "15") {
     await self.workSlack.post("users.profile.set", {
