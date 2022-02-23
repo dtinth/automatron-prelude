@@ -13,6 +13,15 @@ self.time = async (promise) => {
   return { ...result, elapsed: finish - start };
 };
 
+// Send `;qr 'text'` function to generate a QR code.
+self.qr = async (payload) => {
+  return `https://chart.googleapis.com/chart?${new URLSearchParams({
+    cht: "qr",
+    chs: "512x512",
+    chl: payload,
+  })}`;
+};
+
 // Send `;ss(url)` to automatron to get a screenshot of a webpage using personal-puppeteer.
 // See: https://github.com/dtinth/personal-puppeteer
 self.ss = function ss(url, w = 1200, h = 630, options = {}) {
