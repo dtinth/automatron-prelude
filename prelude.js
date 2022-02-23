@@ -14,12 +14,17 @@ self.time = async (promise) => {
 };
 
 // Send `;qr 'text'` function to generate a QR code.
-self.qr = async (payload) => {
+self.qr = (payload) => {
   return `https://chart.googleapis.com/chart?${new URLSearchParams({
     cht: "qr",
     chs: "512x512",
     chl: payload,
   })}`;
+};
+
+self.ppqr = async (amount) => {
+  const base = await ref("ppqr.url").get();
+  return `${base}${amount ? "/" + amount : ""}`;
 };
 
 // Send `;ss(url)` to automatron to get a screenshot of a webpage using personal-puppeteer.
