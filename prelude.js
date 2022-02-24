@@ -14,11 +14,11 @@ self.time = async (promise) => {
 };
 
 // Send `;qr 'text'` function to generate a QR code.
-self.qr = (payload) => {
+self.qr = async (payload) => {
   const url = `https://chart.googleapis.com/chart?${new URLSearchParams({
     cht: "qr",
     chs: "512x512",
-    chl: payload,
+    chl: await payload,
   })}`;
   extraMessages.push({
     type: "image",
@@ -29,6 +29,7 @@ self.qr = (payload) => {
 };
 
 self.ppqr = async (amount) => {
+  amount = await amount;
   const base = await ref("ppqr.url").get();
   const url = `${base}${amount ? "/" + amount : ""}`;
   extraMessages.push({
