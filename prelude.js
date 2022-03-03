@@ -1,9 +1,20 @@
 const axios = require("axios");
 const nacl = require("tweetnacl");
 const jwt = require("jsonwebtoken");
+const lib = require("lib")({
+  token: encrypted(
+    "hWWC+pEnt8tpnOxI6nzgNvKKvg7CiTTn.ipTloLU1BRaHasB/nirB3h9qI1G6XeK3ZbnKhQRSOwsZEw8sLiubpir6tPGZW6E/8AYAWIpXK1Us7dobIcJHPk4JBtXUQQzs2essRxBLPz1Ni6V8wN40ivkF"
+  ),
+});
+
+// Provide access to autocode lib
+self.lib = lib;
 
 // Send `;edit` to automatron to get a quick edit link.
 self.edit = "https://github.dev/dtinth/automatron-prelude/blob/main/prelude.js";
+
+// Use the `peek()` function to access the top-of-stack.
+self.peek = stack.get().then((s) => s[s.length - 1]);
 
 // Use the `time()` function to measure the time for a Promise to resolve.
 self.time = async (promise) => {
@@ -14,7 +25,7 @@ self.time = async (promise) => {
 };
 
 // Send `;qr 'text'` function to generate a QR code.
-self.qr = async (payload) => {
+self.qr = async (payload = self.peek()) => {
   const url = `https://chart.googleapis.com/chart?${new URLSearchParams({
     cht: "qr",
     chs: "512x512",
