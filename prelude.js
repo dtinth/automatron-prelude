@@ -6,6 +6,7 @@ const lib = require("lib")({
     "hWWC+pEnt8tpnOxI6nzgNvKKvg7CiTTn.ipTloLU1BRaHasB/nirB3h9qI1G6XeK3ZbnKhQRSOwsZEw8sLiubpir6tPGZW6E/8AYAWIpXK1Us7dobIcJHPk4JBtXUQQzs2essRxBLPz1Ni6V8wN40ivkF"
   ),
 });
+const enc = (parts) => encrypted(parts[0]);
 
 // Provide access to autocode lib
 self.lib = lib;
@@ -256,3 +257,29 @@ self.registerHandler("work", async () => {
     },
   });
 });
+
+self.gpo = {
+  add(value) {
+    return lib.googlesheets.query["@0.3.0"].insert({
+      spreadsheetId: enc`6AZOEJcSWeoy6vtE1iQulCsso/8b3AhY.mulNE4aHKplOxPHv5lUZpB9Q/dl3Q78+rRF5SvHpXIKvTSgfn6uTtvKeStFXbAdB/wesJyu6uTrD47s5msc=`,
+      range: `A1:C`,
+      fieldsets: [
+        { Date: new Date().toISOString().slice(0, 10), Change: String(value) },
+      ],
+    });
+  },
+  u() {
+    return self.gpo.add(15);
+  },
+  w() {
+    return self.gpo.add(-60);
+  },
+};
+
+self.ema = (name, purpose) => {
+  return lib.googlesheets.query["@0.3.0"].insert({
+    spreadsheetId: enc`Z0dyDVCjmEFMn929MCW2FmppCc3Ym+Rd.xlZjAuoC6UNAbityIQLmWk5CHX1tv0iasEGQTLsto5Gd+RaDKCkUCpFQSlYdtatz2GtCfs1eIwT7Z+Qos/E=`,
+    range: `A1:C`,
+    fieldsets: [{ Name: name, Domain: "spacet.me", For: purpose }],
+  });
+};
