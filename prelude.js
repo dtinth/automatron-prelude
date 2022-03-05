@@ -1,12 +1,11 @@
 const axios = require("axios");
 const nacl = require("tweetnacl");
 const jwt = require("jsonwebtoken");
-const lib = require("lib")({
-  token: encrypted(
-    "hWWC+pEnt8tpnOxI6nzgNvKKvg7CiTTn.ipTloLU1BRaHasB/nirB3h9qI1G6XeK3ZbnKhQRSOwsZEw8sLiubpir6tPGZW6E/8AYAWIpXK1Us7dobIcJHPk4JBtXUQQzs2essRxBLPz1Ni6V8wN40ivkF"
-  ),
-});
 const enc = (parts) => encrypted(parts[0]);
+
+const lib = require("lib")({
+  token: enc`pKhe0/OG8hs7EpuOYiu9fRMDuCvfA8z+.tiTlRjsHZtlNXanawZ3E5tcJhu21SEIqFkXCIqEmPhuuVbvFN0qeVyaO6Da9fGtdzrYo6erDDVHJn4g+4uirs9Fl76uj9w7osWqPZ+29BYJf41gu9tOeNBqOkA==`,
+});
 
 // Provide access to autocode lib
 self.lib = lib;
