@@ -1,10 +1,9 @@
 const axios = require("axios");
 const nacl = require("tweetnacl");
 const jwt = require("jsonwebtoken");
-const enc = (parts) => encrypted(parts[0]);
 
 const lib = require("lib")({
-  token: enc`pKhe0/OG8hs7EpuOYiu9fRMDuCvfA8z+.tiTlRjsHZtlNXanawZ3E5tcJhu21SEIqFkXCIqEmPhuuVbvFN0qeVyaO6Da9fGtdzrYo6erDDVHJn4g+4uirs9Fl76uj9w7osWqPZ+29BYJf41gu9tOeNBqOkA==`,
+  token: encrypted`pKhe0/OG8hs7EpuOYiu9fRMDuCvfA8z+.tiTlRjsHZtlNXanawZ3E5tcJhu21SEIqFkXCIqEmPhuuVbvFN0qeVyaO6Da9fGtdzrYo6erDDVHJn4g+4uirs9Fl76uj9w7osWqPZ+29BYJf41gu9tOeNBqOkA==`,
 });
 
 // Provide access to autocode lib
@@ -165,9 +164,7 @@ self.share = async (url, title, description, image) => {
       },
     },
   };
-  const firebaseDynamicLinksApiKey = encrypted(
-    "pIt6kJSQH5oJNVyf0HIcxKSnsXRQzL2y.m7zZqStBA24bzCZ5Pxtui/5qI0RFasvjfOxJdeZaEyB1i+PZiS5fsHCB6yUaVk5am0PNdJVKyoPk"
-  );
+  const firebaseDynamicLinksApiKey = encrypted`pIt6kJSQH5oJNVyf0HIcxKSnsXRQzL2y.m7zZqStBA24bzCZ5Pxtui/5qI0RFasvjfOxJdeZaEyB1i+PZiS5fsHCB6yUaVk5am0PNdJVKyoPk`;
   const response = await axios.post(
     "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=" +
       firebaseDynamicLinksApiKey,
@@ -179,9 +176,7 @@ self.share = async (url, title, description, image) => {
 self.gh = axios.create({
   baseURL: "https://api.github.com/",
   headers: {
-    Authorization: `Bearer ${encrypted(
-      "PasP+sz1aC0Yxomd/qcjMFhhuttuCUqV.ITv0nwMS6w6ur6uJ4S+yxarPG0GYay7vPaukP4IIFWw+rlC9SfG7jlLRh0l8Pucv72aBh/ghQLDYdg=="
-    )}`,
+    Authorization: `Bearer ${encrypted`PasP+sz1aC0Yxomd/qcjMFhhuttuCUqV.ITv0nwMS6w6ur6uJ4S+yxarPG0GYay7vPaukP4IIFWw+rlC9SfG7jlLRh0l8Pucv72aBh/ghQLDYdg==`}`,
   },
 });
 
@@ -193,9 +188,7 @@ self.gh.comment = (repo, issue, text) =>
 self.workSlack = axios.create({
   baseURL: "https://slack.com/api/",
   headers: {
-    Authorization: `Bearer ${encrypted(
-      "PzuKuXBxqS0HgOR3GzAqxkVPUgSv4ki7.UiksCwrL4MqinqfuWYU+p77eR10Sejtqmv2pgVldlNOMheuKkz9C8KpKWLusd/KBi24YMKqKgKv6kiXzhtG7hQY1BfRB6K6U2wxxnzTVMShnXzY5XLzZaxY5D/3mjT8S"
-    )}`,
+    Authorization: `Bearer ${encrypted`PzuKuXBxqS0HgOR3GzAqxkVPUgSv4ki7.UiksCwrL4MqinqfuWYU+p77eR10Sejtqmv2pgVldlNOMheuKkz9C8KpKWLusd/KBi24YMKqKgKv6kiXzhtG7hQY1BfRB6K6U2wxxnzTVMShnXzY5XLzZaxY5D/3mjT8S`}`,
   },
 });
 
@@ -260,7 +253,7 @@ self.registerHandler("work", async () => {
 self.gpo = {
   add(value) {
     return lib.googlesheets.query["@0.3.0"].insert({
-      spreadsheetId: enc`6AZOEJcSWeoy6vtE1iQulCsso/8b3AhY.mulNE4aHKplOxPHv5lUZpB9Q/dl3Q78+rRF5SvHpXIKvTSgfn6uTtvKeStFXbAdB/wesJyu6uTrD47s5msc=`,
+      spreadsheetId: encrypted`6AZOEJcSWeoy6vtE1iQulCsso/8b3AhY.mulNE4aHKplOxPHv5lUZpB9Q/dl3Q78+rRF5SvHpXIKvTSgfn6uTtvKeStFXbAdB/wesJyu6uTrD47s5msc=`,
       range: `A1:C`,
       fieldsets: [
         { Date: new Date().toISOString().slice(0, 10), Change: String(value) },
@@ -277,7 +270,7 @@ self.gpo = {
 
 self.ema = (name, purpose) => {
   return lib.googlesheets.query["@0.3.0"].insert({
-    spreadsheetId: enc`Z0dyDVCjmEFMn929MCW2FmppCc3Ym+Rd.xlZjAuoC6UNAbityIQLmWk5CHX1tv0iasEGQTLsto5Gd+RaDKCkUCpFQSlYdtatz2GtCfs1eIwT7Z+Qos/E=`,
+    spreadsheetId: encrypted`Z0dyDVCjmEFMn929MCW2FmppCc3Ym+Rd.xlZjAuoC6UNAbityIQLmWk5CHX1tv0iasEGQTLsto5Gd+RaDKCkUCpFQSlYdtatz2GtCfs1eIwT7Z+Qos/E=`,
     range: `A1:C`,
     fieldsets: [{ Name: name, Domain: "spacet.me", For: purpose }],
   });
