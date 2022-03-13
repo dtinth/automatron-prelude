@@ -204,21 +204,24 @@ self.txs = (limit = 15) =>
     .withDb((db) =>
       db.collection("txs").find().sort({ _id: -1 }).limit(limit).toArray()
     )
-    .then((a) =>
-      a
-        .map((e) => {
-          const date = formatDate(e.time);
-          const prefix =
-            e.type === "charge"
-              ? "−"
-              : e.type === "refund"
-              ? "+"
-              : e.type + ":";
-          return `${date}\n⇒ ${prefix}${e.amount} ${e.currency} ${e.merchant}`;
-        })
-        .reverse()
-        .join("\n")
-    );
+    .then((a) => {
+      const lines = [];
+      a.reverse();
+      let lastDate;
+      for (const e of a) {
+        const [date, time] = formatDate(e.time).split(" ");
+        if (date !== lastDate) {
+          lines.push(`${date}`);
+          lastDate = date;
+        }
+        const prefix =
+          e.type === "charge" ? "−" : e.type === "refund" ? "+" : e.type + ":";
+        lines.push(
+          `${time} | ${prefix}${e.amount} ${e.currency} | ${e.merchant}`
+        );
+      }
+      return lines.join("\n");
+    });
 
 self.registerHandler("bedtime", async () => {
   if (new Date().toJSON().split("T")[1] < "15") {
