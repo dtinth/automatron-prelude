@@ -216,9 +216,8 @@ self.txs = (limit = 15) =>
         }
         const prefix =
           e.type === "charge" ? "−" : e.type === "refund" ? "+" : e.type + ":";
-        lines.push(
-          `${time} | ${prefix}${e.amount} ${e.currency} | ${e.merchant}`
-        );
+        const suffix = e.currency === "บาท" ? "" : `  ${e.currency}`;
+        lines.push(`${time} | ${prefix}${e.amount}${suffix} | ${e.merchant}`);
       }
       return lines.join("\n");
     });
