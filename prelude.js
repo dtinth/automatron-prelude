@@ -199,10 +199,10 @@ self.formatDate = (t) => {
 };
 
 // Send `;txs!` to get the latest transactions
-self.txs = () =>
+self.txs = (limit = 15) =>
   self
     .withDb((db) =>
-      db.collection("txs").find().sort({ _id: -1 }).limit(15).toArray()
+      db.collection("txs").find().sort({ _id: -1 }).limit(limit).toArray()
     )
     .then((a) =>
       a
