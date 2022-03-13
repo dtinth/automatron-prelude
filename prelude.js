@@ -208,7 +208,7 @@ self.txs = (limit = 15) =>
       a
         .map((e) => {
           const date = formatDate(e.time);
-          return `${date}\n${e.type} ${e.amount} ${e.currency} ${e.merchant}`;
+          return `${date}\n⇒ ${e.type} ${e.amount} ${e.currency} ${e.merchant}`;
         })
         .reverse()
         .join("\n")
