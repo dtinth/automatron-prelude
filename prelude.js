@@ -179,7 +179,7 @@ self.shorten = async (url) => {
       option: "SHORT",
     },
     dynamicLinkInfo: {
-      link: url,
+      link: warp(url),
       domainUriPrefix: "https://warp.page.link",
     },
   };
