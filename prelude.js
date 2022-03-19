@@ -173,6 +173,25 @@ self.share = async (url, title, description, image) => {
   return response.data.shortLink;
 };
 
+self.shorten = async (url) => {
+  const body = {
+    suffix: {
+      option: "SHORT",
+    },
+    dynamicLinkInfo: {
+      link: url,
+      domainUriPrefix: "https://warp.page.link",
+    },
+  };
+  const firebaseDynamicLinksApiKey = encrypted`pIt6kJSQH5oJNVyf0HIcxKSnsXRQzL2y.m7zZqStBA24bzCZ5Pxtui/5qI0RFasvjfOxJdeZaEyB1i+PZiS5fsHCB6yUaVk5am0PNdJVKyoPk`;
+  const response = await axios.post(
+    "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=" +
+      firebaseDynamicLinksApiKey,
+    body
+  );
+  return response.data.shortLink;
+};
+
 self.gh = axios.create({
   baseURL: "https://api.github.com/",
   headers: {
