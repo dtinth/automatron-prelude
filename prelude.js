@@ -23,6 +23,12 @@ self.time = async (promise) => {
   return { ...result, elapsed: finish - start };
 };
 
+// Reply
+self.reply = (msg) => {
+  extraMessages.push(await msg);
+  return 'ok'
+};
+
 // Send `;qr 'text'` function to generate a QR code.
 self.qr = async (payload = self.peek()) => {
   const url = `https://chart.googleapis.com/chart?${new URLSearchParams({
