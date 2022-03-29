@@ -24,9 +24,9 @@ self.time = async (promise) => {
 };
 
 // Reply
-self.reply = (msg) => {
+self.reply = async (msg) => {
   extraMessages.push(await msg);
-  return 'ok'
+  return "ok";
 };
 
 // Send `;qr 'text'` function to generate a QR code.
