@@ -308,3 +308,5 @@ self.ema = (name, purpose) => {
     fieldsets: [{ Name: name, Domain: "spacet.me", For: purpose }],
   });
 };
+
+self.SD.dev = (name, f) => f();
