@@ -210,13 +210,6 @@ self.gh.comment = (repo, issue, text) =>
     .post(`/repos/${repo}/issues/${issue}/comments`, { body: text })
     .then((r) => r.data.html_url);
 
-self.workSlack = axios.create({
-  baseURL: "https://slack.com/api/",
-  headers: {
-    Authorization: `Bearer ${encrypted`PzuKuXBxqS0HgOR3GzAqxkVPUgSv4ki7.UiksCwrL4MqinqfuWYU+p77eR10Sejtqmv2pgVldlNOMheuKkz9C8KpKWLusd/KBi24YMKqKgKv6kiXzhtG7hQY1BfRB6K6U2wxxnzTVMShnXzY5XLzZaxY5D/3mjT8S`}`,
-  },
-});
-
 self.formatDate = (t) => {
   const d = new Date(Date.parse(t) + 7 * 3600e3);
   const i = d.toISOString();
@@ -246,42 +239,6 @@ self.txs = (limit = 15) =>
       }
       return lines.join("\n");
     });
-
-self.registerHandler("bedtime", async () => {
-  if (new Date().toJSON().split("T")[1] < "15") {
-    await self.workSlack.post("users.profile.set", {
-      profile: {
-        status_text: "taking nap",
-        status_emoji: ":bed:",
-      },
-    });
-  } else {
-    await self.workSlack.post("users.profile.set", {
-      profile: {
-        status_text: "sleeping",
-        status_emoji: ":zzz:",
-      },
-    });
-  }
-});
-
-self.registerHandler("ooo", async () => {
-  await self.workSlack.post("users.profile.set", {
-    profile: {
-      status_text: "out-of-office",
-      status_emoji: ":ooo:",
-    },
-  });
-});
-
-self.registerHandler("work", async () => {
-  await self.workSlack.post("users.profile.set", {
-    profile: {
-      status_text: "",
-      status_emoji: "",
-    },
-  });
-});
 
 self.gpo = {
   add(value) {
